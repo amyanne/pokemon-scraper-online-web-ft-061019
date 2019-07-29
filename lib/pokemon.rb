@@ -38,7 +38,7 @@ class Pokemon
     DB[:conn].execute(sql_update, self.name, self.type, self.db, self.id)
   end
   
-  def self.find_by_id(id)
+  def self.find(id)
         sql = <<-SQL
             SELECT *
             FROM pokemon
