@@ -38,13 +38,15 @@ class Pokemon
     DB[:conn].execute(sql_update, self.name, self.type, self.db, self.id)
   end
   
-  def self.find(db, id)
-    sql = <<-SQL
-         SELECT * FROM pokemon WHERE id = ?;
-      SQL
-      DB[:conn].execute(sql, id).map do |row|
-        self.row[0]
-      end.first
-     
-    end 
-end
+  def self.find_by_id(id)
+        sql = <<-SQL
+            SELECT *
+            FROM pokemon
+            WHERE id = ?
+            LIMIT 1
+        SQL
+        
+        DB[:conn].execute(sql,id).map do |row|
+            self.new_from_db(row)
+        end.first
+    end
